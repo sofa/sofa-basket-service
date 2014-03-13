@@ -483,7 +483,7 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
             shipping = options.shippingMethod.price;
         }
 
-        total = sum + shipping + discount;
+        total = sum + discount;
 
         /* jshint camelcase: false */
         if (surcharge_percentage) {
@@ -491,7 +491,7 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         }
         /* jshint camelcase: true */
 
-        total += surcharge;
+        total += shipping + surcharge;
 
         // For each coupon, subtract the discount value
         activeCoupons.forEach(function (coupon) {
