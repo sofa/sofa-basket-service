@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Sofa Web SDK basket service component.",
   "main": "dist/sofa.basketService.js",
+  "homepage": "http://www.sofa.io",
   "scripts": {
     "test": "grunt build"
   },
