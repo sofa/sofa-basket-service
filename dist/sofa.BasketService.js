@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.1.3 - 2014-03-19
+ * sofa-basket-service - v0.1.3 - 2014-04-15
  * http://www.sofa.io
  *
  * Copyright (c) 2013 CouchCommerce GmbH (http://www.couchcommerce.org) and other contributors
@@ -101,6 +101,10 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
             throw new Error('product out of stock');
         }
 
+        if (!canHandleQuantity(product, quantity, variant)) {
+            throw new Error('exceeds available stock');
+        }
+
         var basketItem = self.find(createProductPredicate(product, variant)),
             exists = !sofa.Util.isUndefined(basketItem);
 
@@ -113,11 +117,50 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         basketItem.quantity = basketItem.quantity + quantity;
         basketItem.variant = variant;
 
+        if (!product.hasInfiniteStock() && !variant) {
+            product.qty = product.qty - quantity;
+        }
+        else if (variant !== null && cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
+            variant.stock = variant.stock - quantity;
+        }
+
         writeToStore();
 
         self.emit('itemAdded', self, basketItem);
 
         return basketItem;
+    };
+
+    /**
+     * @method canBeIncreasedBy
+     * @memberof sofa.BasketService
+     *
+     * @description
+     * Checks for a given basketItem if it can be increased by a specified amount.
+     *
+     * @example
+     * basketService.canBeIncreasedBy(basketItem, 1);
+     *
+     * @param {object} basketItem used for the check.
+     * @param {number} quantity to be checked against.
+     *
+     * @return {boolean} returns true if the item amount can be increased.
+     */
+    self.canBeIncreasedBy = function(basketItem, amount) {
+        return canHandleQuantity(basketItem.product, amount, basketItem.variant);
+    };
+
+    var canHandleQuantity = function (product, quantity, variant) {
+
+        // variants without stock will use the stock rules of the product
+        if (!variant || !cc.Util.isNumeric(variant.stock)) {
+            return product.hasInfiniteStock() || (product.qty - quantity >= 0);
+        }
+        else {
+            return variant.stock - quantity >= 0;
+        }
+
+        return true;
     };
 
     /**
@@ -295,6 +338,14 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
 
         if (basketItem.quantity === 0) {
             sofa.Util.Array.remove(items, basketItem);
+        }
+
+        // give the stock back to the product
+        if (!product.hasInfiniteStock() && !variant) {
+            product.qty = product.qty + quantity;
+        }
+        else if (cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
+            variant.stock = variant.stock + quantity;
         }
 
         writeToStore();

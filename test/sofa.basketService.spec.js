@@ -76,48 +76,119 @@ describe('sofa.basketService', function () {
             expect(typeof basketService.addItem).toBe('function');
         });
 
-        it('should add an item', function () {
-            product.name = 'Testproduct';
-            product.id = 10;
+        describe('when item added without variant', function () {
+            it('should add an item', function () {
+                product.name = 'Testproduct';
+                product.id = 10;
+                product.qty = 1;
 
-            var basketItem = basketService.addItem(product, 1);
-            var summary = basketService.getSummary();
+                var basketItem = basketService.addItem(product, 1);
+                var summary = basketService.getSummary();
 
-            expect(summary.quantity).toBe(1);
-            expect(basketItem.product).toEqual(product);
+                expect(summary.quantity).toBe(1);
+                expect(basketItem.product).toEqual(product);
+                expect(product.qty).toBe(0);
+            });
         });
 
-        it('should throw exception when trying to add out of stock item', function () {
-            product.name = 'Testproduct';
-            product.id = 10;
-            product.qty = 0;
+        describe('when item added without stock', function () {
+            it('should throw exception', function () {
+                product.name = 'Testproduct';
+                product.id = 10;
+                product.qty = 0;
 
-            expect(function () {
-                basketService.addItem(product, 1);
-            }).toThrow('product out of stock');
+                expect(function () {
+                    basketService.addItem(product, 1);
+                }).toThrow('product out of stock');
+            });
         });
 
-        it('should remove entire basket item when removing last item', function () {
-            product.name = 'Testproduct';
-            product.id = 10;
 
-            var basketItem = basketService.addItem(product, 1);
-            var summary = basketService.getSummary();
+        describe('when item added, then removed', function () {
+            describe('without variant', function () {
+                it('should remove entire basket item and free stock', function () {
+                    product.name = 'Testproduct';
+                    product.id = 10;
+                    product.qty = 1;
 
-            expect(summary.quantity).toBe(1);
-            expect(basketItem.product).toEqual(product);
+                    var basketItem = basketService.addItem(product, 1);
+                    var summary = basketService.getSummary();
 
-            var itemRemovedCalled = 0;
-            basketService.on('itemRemoved', function () {
-                summary = basketService.getSummary();
-                expect(summary.quantity).toBe(0);
-                expect(basketService.getItems().length).toBe(0);
-                itemRemovedCalled++;
+                    expect(summary.quantity).toBe(1);
+                    expect(basketItem.product).toEqual(product);
+                    expect(product.qty).toBe(0);
+
+                    var itemRemovedCalled = 0;
+                    basketService.on('itemRemoved', function () {
+                        summary = basketService.getSummary();
+                        expect(summary.quantity).toBe(0);
+                        expect(basketService.getItems().length).toBe(0);
+                        expect(product.qty).toBe(1);
+                        itemRemovedCalled++;
+                    });
+
+                    basketService.decreaseOne(basketItem);
+                    expect(itemRemovedCalled).toBe(1);
+                });
             });
 
-            basketService.decreaseOne(basketItem);
-            expect(itemRemovedCalled).toBe(1);
+
+            describe('with variant', function () {
+                it('should remove entire basket item and free stock', function () {
+                    product.name = 'Testproduct';
+                    product.id = 10;
+
+                    var variant = {
+                        id: 1,
+                        stock: 1
+                    };
+
+                    var basketItem = basketService.addItem(product, 1, variant);
+                    var summary = basketService.getSummary();
+
+                    expect(summary.quantity).toBe(1);
+                    expect(basketItem.product).toEqual(product);
+                    expect(variant.stock).toBe(0);
+
+                    var itemRemovedCalled = 0;
+                    basketService.on('itemRemoved', function () {
+                        summary = basketService.getSummary();
+                        expect(summary.quantity).toBe(0);
+                        expect(basketService.getItems().length).toBe(0);
+                        expect(variant.stock).toBe(1);
+                        itemRemovedCalled++;
+                    });
+
+                    basketService.decreaseOne(basketItem);
+                    expect(itemRemovedCalled).toBe(1);
+                });
+            });
         });
+
+        // it('should add and remove basket item with variant', function () {
+        //     product.name = 'Testproduct';
+        //     product.id = 10;
+        //     product.qty = 1;
+        //
+        //     var basketItem = basketService.addItem(product, 1);
+        //     var summary = basketService.getSummary();
+        //
+        //     expect(summary.quantity).toBe(1);
+        //     expect(basketItem.product).toEqual(product);
+        //     expect(product.qty).toBe(0);
+        //
+        //     var itemRemovedCalled = 0;
+        //     basketService.on('itemRemoved', function () {
+        //         summary = basketService.getSummary();
+        //         expect(summary.quantity).toBe(0);
+        //         expect(basketService.getItems().length).toBe(0);
+        //         expect(product.qty).toBe(1);
+        //         itemRemovedCalled++;
+        //     });
+        //
+        //     basketService.decreaseOne(basketItem);
+        //     expect(itemRemovedCalled).toBe(1);
+        // });
     });
 
     describe('sofa.BasketService#decrease', function () {
@@ -183,7 +254,7 @@ describe('sofa.basketService', function () {
             expect(basketService.getItems().length).toBe(1);
         });
 
-        it('should cumulate same products even after pap reload without vairan', function () {
+        it('should cumulate same products even after app reload without vairant', function () {
             product.name = 'Testproduct';
             product.id = 10;
             product.price = 2;
@@ -210,7 +281,7 @@ describe('sofa.basketService', function () {
             expect(freshBasketService.getItems().length).toBe(1);
         });
 
-        it('should cumulate same products after app reload (with varian)', function () {
+        it('should cumulate same products after app reload (with variant)', function () {
             product.name = 'Testproduct';
             product.id = 10;
             product.price = 2;

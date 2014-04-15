@@ -91,6 +91,10 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
             throw new Error('product out of stock');
         }
 
+        if (!canHandleQuantity(product, quantity, variant)) {
+            throw new Error('exceeds available stock');
+        }
+
         var basketItem = self.find(createProductPredicate(product, variant)),
             exists = !sofa.Util.isUndefined(basketItem);
 
@@ -103,11 +107,32 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         basketItem.quantity = basketItem.quantity + quantity;
         basketItem.variant = variant;
 
+        if (!product.hasInfiniteStock() && !variant) {
+            product.qty = product.qty - quantity;
+        }
+        else if (variant !== null && cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
+            variant.stock = variant.stock - quantity;
+        }
+
         writeToStore();
 
         self.emit('itemAdded', self, basketItem);
 
         return basketItem;
+    };
+
+
+    var canHandleQuantity = function (product, quantity, variant) {
+
+        // variants without stock will use the stock rules of the product
+        if (!variant || !cc.Util.isNumeric(variant.stock)) {
+            return product.hasInfiniteStock() || (product.qty - quantity >= 0);
+        }
+        else {
+            return variant.stock - quantity >= 0;
+        }
+
+        return true;
     };
 
     /**
@@ -285,6 +310,14 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
 
         if (basketItem.quantity === 0) {
             sofa.Util.Array.remove(items, basketItem);
+        }
+
+        // give the stock back to the product
+        if (!product.hasInfiniteStock() && !variant) {
+            product.qty = product.qty + quantity;
+        }
+        else if (cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
+            variant.stock = variant.stock + quantity;
         }
 
         writeToStore();

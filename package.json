@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "sofa-storages": "~0.2.x",
-    "sofa-core": "~0.4.x"
+    "sofa-core": "~0.7.x"
   },
   "devDependencies": {
     "grunt": "~0.4.3",
