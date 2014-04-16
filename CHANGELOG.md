@@ -1,3 +1,13 @@
+<a name="0.2.1"></a>
+### 0.2.1 (2014-04-16)
+
+
+#### Bug Fixes
+
+* **Gruntfile:** fixes license banner ([96d4278e](https://github.com/sofa/sofa-basket-service/commit/96d4278e601da7d4e34324d3175cc73043156341))
+* **LICENSE:** fixes naming ([30864cba](https://github.com/sofa/sofa-basket-service/commit/30864cba47252cc39e938fa5f5f33d009e1312d6))
+
+
 <a name="0.1.2"></a>
 ### 0.1.2 (2014-03-14)
 
