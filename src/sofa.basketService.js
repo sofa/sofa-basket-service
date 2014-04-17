@@ -121,6 +121,24 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         return basketItem;
     };
 
+    /**
+    * @method canBeIncreasedBy
+    * @memberof sofa.BasketService
+    *
+    * @description
+    * Checks for a given basketItem if it can be increased by a specified amount.
+    *
+    * @example
+    * basketService.canBeIncreasedBy(basketItem, 1);
+    *
+    * @param {object} basketItem used for the check.
+    * @param {number} quantity to be checked against.
+    *
+    * @return {boolean} returns true if the item amount can be increased.
+    */
+    self.canBeIncreasedBy = function (basketItem, amount) {
+        return canHandleQuantity(basketItem.product, amount, basketItem.variant);
+    };
 
     var canHandleQuantity = function (product, quantity, variant) {
 
