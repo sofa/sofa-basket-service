@@ -1,3 +1,12 @@
+<a name="0.2.4"></a>
+### 0.2.4 (2014-06-17)
+
+
+#### Bug Fixes
+
+* **basketService:** fix faulty vat rounding ([08a44891](https://github.com/sofa/sofa-basket-service/commit/08a44891e887365199dd8aeab25a8b9a14cfa68f))
+
+
 <a name="0.2.3"></a>
 ### 0.2.3 (2014-06-17)
 
