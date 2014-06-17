@@ -512,16 +512,21 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
                                     sofa.Util.isNumber(options.paymentMethod.surcharge_percentage) ?
                                     options.paymentMethod.surcharge_percentage : 0,
             total                = 0;
+
+
+        var getVat = function (price, tax, quantity) {
+            return parseFloat(Math.round((price * tax / (100 + tax)) * 100) / 100) * quantity;
+        };
+
             /* jshint camelcase: true */
         items.forEach(function (item) {
             var itemQuantity = parseInt(item.quantity, 10);
             var product = item.product;
-            //attention this doesn't take variants into account yet!
             var price = item.getPrice();
             var tax = parseInt(product.tax, 10);
             quantity += itemQuantity;
             sum += price * itemQuantity;
-            vat += parseFloat(Math.round((price * tax / (100 + tax)) * 100) / 100) * itemQuantity;
+            vat += getVat(price, tax, itemQuantity);
         });
         //set the shipping to zero if the sum is above the configured free shipping value
         shipping = freeShippingFrom !== null && freeShippingFrom !== undefined && sum >= freeShippingFrom ? 0 : shipping;
@@ -545,9 +550,12 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         // For each coupon, subtract the discount value
         activeCoupons.forEach(function (coupon) {
             total -= parseFloat(coupon.amount);
+            //hardcode the coupon tax to 19 percent if it's not given for the coupon
+            coupon.tax = sofa.Util.isNumeric(coupon.tax) ? coupon.tax : 19;
+            vat -= getVat(coupon.amount, coupon.tax, 1);
         });
 
-        vat += parseFloat(Math.round((shipping * shippingTax / (100 + shippingTax)) * 100) / 100);
+        vat += getVat(shipping, shippingTax, 1);
 
         var summary = {
             quantity: quantity,

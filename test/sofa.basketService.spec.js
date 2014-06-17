@@ -403,6 +403,46 @@ describe('sofa.basketService', function () {
             expect(basketItem2.quantity).toBe(1);
             expect(basketService.getItems().length).toBe(2);
         });
+
+        it('should calculate correct taxes for coupons', function () {
+            var product1 = new sofa.models.Product();
+            product1.name = 'Testproduct';
+            product1.id = 1;
+            product1.price = 100;
+            product1.tax = 19;
+
+            var product2 = new sofa.models.Product();
+            product2.name = 'Testproduct';
+            product2.id = 2;
+            product2.price = 30;
+            product2.tax = 7;
+
+            var coupon = {
+                amount: 10,
+                code: 'ZEHN',
+                description: '10.00 Discount',
+                error: null,
+                freeShipping: '0',
+                name: 'ZEHN',
+                sortOrder: '0',
+                type: 'fix',
+                tax: 19
+            };
+
+            var basketItem = basketService.addItem(product1, 2);
+            var basketItem2 = basketService.addItem(product2, 3);
+
+            basketService.addCoupon(coupon);
+            var summary = basketService.getSummary();
+
+            expect(summary.quantity).toBe(5);
+            expect(basketItem.product).toBe(product1);
+            expect(basketItem2.product).toBe(product2);
+
+            expect(summary.total).toBe(285);
+            expect(summary.vat).toBe(37.019999999999996);
+            expect(summary.vatStr).toBe('37.02');
+        });
     });
 
     describe('sofa.BasketService#increase', function () {
