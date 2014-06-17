@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.2.2 - 2014-06-17
+ * sofa-basket-service - v0.2.3 - 2014-06-17
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors
@@ -525,7 +525,7 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
 
 
         var getVat = function (price, tax, quantity) {
-            return parseFloat(Math.round((price * tax / (100 + tax)) * 100) / 100) * quantity;
+            return parseFloat(((price * tax / (100 + tax)) * 100) / 100) * quantity;
         };
 
             /* jshint camelcase: true */
@@ -569,16 +569,16 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
 
         var summary = {
             quantity: quantity,
-            sum: sum,
+            sum: sofa.Util.round(sum, 2),
             sumStr: sum.toFixed(2),
-            vat: vat,
+            vat: sofa.Util.round(vat, 2),
             vatStr: vat.toFixed(2),
-            shipping: shipping,
+            shipping: sofa.Util.round(shipping, 2),
             shippingStr: shipping.toFixed(2),
-            surcharge: surcharge,
+            surcharge: sofa.Util.round(surcharge, 2),
             surchargeStr: surcharge.toFixed(2),
-            discount: discount,
-            total: total,
+            discount: sofa.Util.round(discount, 2),
+            total: sofa.Util.round(total, 2),
             totalStr: total.toFixed(2),
             shippingTax: shippingTax
         };

@@ -440,7 +440,7 @@ describe('sofa.basketService', function () {
             expect(basketItem2.product).toBe(product2);
 
             expect(summary.total).toBe(285);
-            expect(summary.vat).toBe(37.019999999999996);
+            expect(summary.vat).toBe(37.02);
             expect(summary.vatStr).toBe('37.02');
         });
     });
@@ -612,7 +612,7 @@ describe('sofa.basketService', function () {
             expect(itemCount).toBe(3);
             expect(summary.quantity).toBe(11);
             expect(summary.sum).toBe(94.65);
-            expect(summary.vat).toBe(9.15);
+            expect(summary.vat).toBe(9.18);
             expect(summary.total).toBe(99.65);
             expect(summary.shipping).toBe(5);
         });
