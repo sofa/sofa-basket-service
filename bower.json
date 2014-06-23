@@ -1,22 +1,22 @@
 {
-  "name": "sofa-basket-service",
-  "version": "0.2.4",
-  "homepage": "http://www.sofa.io",
-  "authors": [
-    "Pascal Precht <pascal@couchcommerce.com>"
-  ],
-  "description": "Sofa Web SDK basket service component.",
-  "main": "dist/sofa.basketService.js",
-  "keywords": [
-    "sofa",
-    "sofa.io",
-    "web",
-    "sdk",
-    "service"
-  ],
-  "license": "GPL",
-  "dependencies": {
-    "sofa-core": "~0.7.x",
-    "sofa-storages": "~0.2.x"
-  }
+    "name": "sofa-basket-service",
+    "version": "0.3.0",
+    "homepage": "http://www.sofa.io",
+    "authors": [
+        "Pascal Precht <pascal@couchcommerce.com>"
+    ],
+    "description": "Sofa Web SDK basket service component.",
+    "main": "dist/sofa.basketService.js",
+    "keywords": [
+        "sofa",
+        "sofa.io",
+        "web",
+        "sdk",
+        "service"
+    ],
+    "license": "GPL",
+    "dependencies": {
+        "sofa-core": "~0.7.x",
+        "sofa-storages": "~0.2.x"
+    }
 }

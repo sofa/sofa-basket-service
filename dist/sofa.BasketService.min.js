@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.2.3 - 2014-06-17
+ * sofa-basket-service - v0.3.0 - 2014-06-23
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors

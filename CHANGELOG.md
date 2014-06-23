@@ -1,3 +1,12 @@
+<a name="0.3.0"></a>
+## 0.3.0 (2014-06-23)
+
+
+#### Features
+
+* **grunt:** better deploying ([ebc6b82b](https://github.com/sofa/sofa-basket-service/commit/ebc6b82ba5cb1b5d8379add3ddca9b12573befef))
+
+
 <a name="0.2.4"></a>
 ### 0.2.4 (2014-06-17)
 
