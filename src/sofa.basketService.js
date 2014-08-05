@@ -1,9 +1,12 @@
 'use strict';
 /* global sofa */
 /**
- * @name BasketService
- * @class
- * @namespace sofa.BasketService
+ * @sofadoc class
+ * @name sofa.BasketService
+ * @package sofa-basket-service
+ * @requiresPackage sofa-storages
+ * @requires sofa.MemoryStorageService || sofa.LocalStorageService
+ * @distFile dist/sofa.basketService.js
  *
  * @description
  * `sofa.BasketService` is the interface to interact with a shopping cart. It provides
@@ -69,7 +72,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     writeToStore();
 
     /**
-     * @method addItem
+     * @sofadoc method
+     * @name sofa.BasketService#addItem
      * @memberof sofa.BasketService
      *
      * @description
@@ -122,20 +126,21 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-    * @method canBeIncreasedBy
-    * @memberof sofa.BasketService
-    *
-    * @description
-    * Checks for a given basketItem if it can be increased by a specified amount.
-    *
-    * @example
-    * basketService.canBeIncreasedBy(basketItem, 1);
-    *
-    * @param {object} basketItem used for the check.
-    * @param {number} quantity to be checked against.
-    *
-    * @return {boolean} returns true if the item amount can be increased.
-    */
+     * @sofadoc method
+     * @name sofa.BasketService#canBeIncreasedBy
+     * @memberof sofa.BasketService
+     *
+     * @description
+     * Checks for a given basketItem if it can be increased by a specified amount.
+     *
+     * @example
+     * basketService.canBeIncreasedBy(basketItem, 1);
+     *
+     * @param {object} basketItem used for the check.
+     * @param {number} quantity to be checked against.
+     *
+     * @return {boolean} returns true if the item amount can be increased.
+     */
     self.canBeIncreasedBy = function (basketItem, amount) {
         return canHandleQuantity(basketItem.product, amount, basketItem.variant);
     };
@@ -154,8 +159,9 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method addCoupon
-     * @memberof cc.BasketService
+     * @sofadoc method
+     * @name sofa.BasketService#addCoupon
+     * @memberof sofa.BasketService
      *
      * @description
      * Adds a coupon to the basket.
@@ -179,8 +185,9 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method removeCoupon
-     * @memberof cc.BasketService
+     * @sofadoc method
+     * @name sofa.BasketService#removeCoupon
+     * @memberof sofa.BasketService
      *
      * @description
      * Removes a coupon which is currently active in the basket.
@@ -202,8 +209,9 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method getActiveCoupons
-     * @memberof cc.BasketService
+     * @sofadoc method
+     * @name sofa.BasketService#getActiveCoupons
+     * @memberof sofa.BasketService
      *
      * @description
      * Gets the coupons which are currently active in the basket.
@@ -218,7 +226,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method increaseOne
+     * @sofadoc method
+     * @name sofa.BasketService#increaseOne
      * @memberof sofa.BasketService
      *
      * @description
@@ -238,7 +247,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method increase
+     * @sofadoc method
+     * @name sofa.BasketService#increase
      * @memberof sofa.BasketService
      *
      * @description
@@ -265,7 +275,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method exists
+     * @sofadoc method
+     * @name sofa.BasketService#exists
      * @memberof sofa.BasketService
      *
      * @description
@@ -296,7 +307,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method removeItem
+     * @sofadoc method
+     * @name sofa.BasketService#removeItem
      * @memberof sofa.BasketService
      *
      * @description
@@ -346,7 +358,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method decreaseOne
+     * @sofadoc method
+     * @name sofa.BasketService#decreaseOne
      * @memberof sofa.BasketService
      *
      * @description
@@ -366,7 +379,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method decrease
+     * @sofadoc method
+     * @name sofa.BasketService#decrease
      * @memberof sofa.BasketService
      *
      * @description
@@ -387,7 +401,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method clear
+     * @sofadoc method
+     * @name sofa.BasketService#clear
      * @memberof sofa.BasketService
      *
      * @description
@@ -412,8 +427,9 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method clearCoupons
-     * @memberof cc.BasketService
+     * @sofadoc method
+     * @name sofa.BasketService#clearCoupons
+     * @memberof sofa.BasketService
      *
      * @description
      * Removes all active coupons from the basket.
@@ -436,7 +452,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method find
+     * @sofadoc method
+     * @name sofa.BasketService#find
      * @memberof sofa.BasketService
      *
      * @description
@@ -457,7 +474,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
 
 
     /**
-     * @method getItems
+     * @sofadoc method
+     * @name sofa.BasketService#getItems
      * @memberof sofa.BasketService
      *
      * @description
@@ -473,8 +491,9 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method isEmpty
-     * @memberof cc.BasketService
+     * @sofadoc method
+     * @name sofa.BasketService#isEmpty
+     * @memberof sofa.BasketService
      *
      * @description
      * Returns true if the basket is Empty.
@@ -486,7 +505,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     /**
-     * @method getSummary
+     * @sofadoc method
+     * @name sofa.BasketService#getSummary
      * @memberof sofa.BasketService
      *
      * @description
