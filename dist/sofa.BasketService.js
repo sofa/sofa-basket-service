@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.4.0 - 2014-08-05
+ * sofa-basket-service - v0.4.0 - 2014-12-15
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors
@@ -328,12 +328,12 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
      * basketService.removeItem(product, 1, foo, 3);
      *
      * @param {object} product The Product that should be removed from the basket.
-     * @param {number} quantity The quantity that should be removed from the basket.
      * @param {object} variant The variant that should be removed from the basket.
+     * @param {=number} quantity The quantity that should be removed from the basket.
      *
      * @return {object} Removed basket item.
      */
-    self.removeItem = function (product, quantity, variant) {
+    self.removeItem = function (product, variant, quantity) {
         var basketItem = self.find(createProductPredicate(product, variant));
 
         if (!basketItem) {
@@ -342,14 +342,18 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
                 '  does not exist in the basket');
         }
 
-        if (basketItem.quantity < quantity) {
+        if (quantity && basketItem.quantity < quantity) {
             throw new Error('remove quantity is higher than existing quantity');
         }
 
-        basketItem.quantity = basketItem.quantity - quantity;
+        basketItem.quantity = quantity ? basketItem.quantity - quantity : 0;
 
         if (basketItem.quantity === 0) {
             sofa.Util.Array.remove(items, basketItem);
+        }
+
+        if (!quantity) {
+            quantity = basketItem.quantity;
         }
 
         // give the stock back to the product
@@ -407,7 +411,7 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
      * @return {object} Updated basket item.
      */
     self.decrease = function (basketItem, number) {
-        return self.removeItem(basketItem.product, number, basketItem.variant);
+        return self.removeItem(basketItem.product, basketItem.variant, number);
     };
 
     /**
