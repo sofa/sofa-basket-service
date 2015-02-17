@@ -1,3 +1,11 @@
+## 0.4.0 (2015-02-17)
+
+
+#### Features
+
+* **sofa.BasketService:** new build process + Angular service ([95572f98](https://github.com/sofa/sofa-basket-service/commit/95572f98ccedba520847a5120d077e1bf816fbfb))
+
+
 <a name="0.4.0"></a>
 ## 0.4.0 (2014-08-05)
 
