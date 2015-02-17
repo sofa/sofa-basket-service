@@ -1,3 +1,11 @@
+## 0.5.0 (2015-02-17)
+
+
+#### Bug Fixes
+
+* **sofa.BasketService:** fixes tests due to API changes in Jasmine ([52761764](https://github.com/sofa/sofa-basket-service/commit/5276176447cf45add6661f2593e2d957606ef4c2))
+
+
 ## 0.4.0 (2015-02-17)
 
 
