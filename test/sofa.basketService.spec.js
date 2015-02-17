@@ -91,17 +91,17 @@ describe('sofa.basketService', function () {
             });
         });
 
-        // describe('when item added without stock', function () {
-        //     it('should throw exception', function () {
-        //         product.name = 'Testproduct';
-        //         product.id = 10;
-        //         product.qty = 0;
+        describe('when item added without stock', function () {
+            it('should throw exception', function () {
+                product.name = 'Testproduct';
+                product.id = 10;
+                product.qty = 0;
 
-        //         expect(function () {
-        //             basketService.addItem(product, 1);
-        //         }).toThrow('product out of stock');
-        //     });
-        // });
+                expect(function () {
+                    basketService.addItem(product, 1);
+                }).toThrowError('product out of stock');
+            });
+        });
 
 
         describe('when item added, then removed', function () {
@@ -169,14 +169,14 @@ describe('sofa.basketService', function () {
         //     product.name = 'Testproduct';
         //     product.id = 10;
         //     product.qty = 1;
-        //
+
         //     var basketItem = basketService.addItem(product, 1);
         //     var summary = basketService.getSummary();
-        //
+
         //     expect(summary.quantity).toBe(1);
         //     expect(basketItem.product).toEqual(product);
         //     expect(product.qty).toBe(0);
-        //
+
         //     var itemRemovedCalled = 0;
         //     basketService.on('itemRemoved', function () {
         //         summary = basketService.getSummary();
@@ -185,7 +185,7 @@ describe('sofa.basketService', function () {
         //         expect(product.qty).toBe(1);
         //         itemRemovedCalled++;
         //     });
-        //
+
         //     basketService.decreaseOne(basketItem);
         //     expect(itemRemovedCalled).toBe(1);
         // });
@@ -505,29 +505,29 @@ describe('sofa.basketService', function () {
             expect(basketItem.quantity).toBe(5);
         });
 
-        // it('should raise an exception when removing not existing item', function () {
-        //     product.name = 'Testproduct';
-        //     product.id = 10;
+        it('should raise an exception when removing not existing item', function () {
+            product.name = 'Testproduct';
+            product.id = 10;
 
-        //     expect(function () {
-        //         basketService.removeItem(product, 5);
-        //     }).toThrow('Product id: 10 , variant: undefined  does not exist in the basket');
-        // });
+            expect(function () {
+                basketService.removeItem(product, 5);
+            }).toThrowError('Product id: 10 , variant: undefined  does not exist in the basket');
+        });
 
-        // it('should throw an exception when removing more items than what exist', function () {
+        it('should throw an exception when removing more items than what exist', function () {
 
-        //     product.name = 'Testproduct';
-        //     product.id = 10;
+            product.name = 'Testproduct';
+            product.id = 10;
 
-        //     var basketItem = basketService.addItem(product, 10);
+            var basketItem = basketService.addItem(product, 10);
 
-        //     expect(basketItem.product).toBe(product);
-        //     expect(basketItem.quantity).toBe(10);
+            expect(basketItem.product).toBe(product);
+            expect(basketItem.quantity).toBe(10);
 
-        //     expect(function () {
-        //         basketService.removeItem(product, 11);
-        //     }).toThrow('remove quantity is higher than existing quantity');
-        // });
+            expect(function () {
+                basketService.removeItem(product, 11);
+            }).toThrowError('remove quantity is higher than existing quantity');
+        });
     });
 
     describe('sofa.BasketService#clear', function () {
