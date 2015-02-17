@@ -1,13 +1,12 @@
 /**
- * sofa-basket-service - v0.4.0 - 2014-08-05
+ * sofa-basket-service - v0.4.0 - Tue Feb 17 2015 12:16:52 GMT+0100 (CET)
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors
- * THIS SOFTWARE CONTAINS COMPONENTS OF THE SOFA.IO COUCHCOMMERCE SDK (WWW.SOFA.IO).
+ * THIS SOFTWARE CONTAINS COMPONENTS OF THE SOFA.IO COUCHCOMMERCE SDK (WWW.SOFA.IO)
  * IT IS PROVIDED UNDER THE LICENSE TERMS OF THE ATTACHED LICENSE.TXT.
  */
-;(function (sofa, undefined) {
-
+;(function (sofa, document, undefined) {
 'use strict';
 /* global sofa */
 /**
@@ -607,5 +606,4 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
     return self;
 });
-
-}(sofa));
+}(sofa, document));
