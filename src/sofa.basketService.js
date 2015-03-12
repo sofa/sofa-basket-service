@@ -71,6 +71,34 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
 
     writeToStore();
 
+
+    /**
+     * @sofadoc method
+     * @name sofa.BasketService#addItem
+     * @memberof sofa.BasketService
+     *
+     * @description
+     * Reloads the data from the underlying storage
+     *
+     * @example
+     * basketService.reloadStorage()
+     *
+     */
+    self.reloadStorage = function () {
+        // important note, we don't want new instances. We must assume others
+        // hold references to such items, so we can't just change the instances.
+        items.length = 0;
+        activeCoupons.length = 0;
+
+        var newItems = sanitizeSavedData(storageService.get(storeItemsName)) || [],
+            newActiveCoupons = sanitizeSavedData(storageService.get(storeCouponsName)) || [];
+
+        Array.prototype.push.apply(items, newItems);
+        Array.prototype.push.apply(activeCoupons, newActiveCoupons);
+
+        self.emit('storageReloaded', self);
+    };
+
     /**
      * @sofadoc method
      * @name sofa.BasketService#addItem
