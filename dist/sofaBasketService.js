@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.5.0 - Tue Feb 17 2015 12:44:58 GMT+0100 (CET)
+ * sofa-basket-service - v0.5.1 - Thu Mar 12 2015 12:41:14 GMT+0100 (CET)
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors
@@ -79,6 +79,34 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
     };
 
     writeToStore();
+
+
+    /**
+     * @sofadoc method
+     * @name sofa.BasketService#addItem
+     * @memberof sofa.BasketService
+     *
+     * @description
+     * Reloads the data from the underlying storage
+     *
+     * @example
+     * basketService.reloadStorage()
+     *
+     */
+    self.reloadStorage = function () {
+        // important note, we don't want new instances. We must assume others
+        // hold references to such items, so we can't just change the instances.
+        items.length = 0;
+        activeCoupons.length = 0;
+
+        var newItems = sanitizeSavedData(storageService.get(storeItemsName)) || [],
+            newActiveCoupons = sanitizeSavedData(storageService.get(storeCouponsName)) || [];
+
+        Array.prototype.push.apply(items, newItems);
+        Array.prototype.push.apply(activeCoupons, newActiveCoupons);
+
+        self.emit('storageReloaded', self);
+    };
 
     /**
      * @sofadoc method
