@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.5.1 - Thu Mar 12 2015 12:41:14 GMT+0100 (CET)
+ * sofa-basket-service - v0.5.1 - Thu Mar 12 2015 12:41:46 GMT+0100 (CET)
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors

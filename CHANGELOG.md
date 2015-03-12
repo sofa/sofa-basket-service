@@ -1,3 +1,17 @@
+### 0.5.1 (2015-03-12)
+
+
+#### Bug Fixes
+
+* **sofa.BasketService:** fixes tests due to API changes in Jasmine ([52761764](https://github.com/sofa/sofa-basket-service/commit/5276176447cf45add6661f2593e2d957606ef4c2))
+
+
+#### Features
+
+* ***:** adds releadStorage API ([cddfc3b2](https://github.com/sofa/sofa-basket-service/commit/cddfc3b2f445a34f505e70aaa9f941dc8c9b2dbc))
+* **sofa.BasketService:** new build process + Angular service ([95572f98](https://github.com/sofa/sofa-basket-service/commit/95572f98ccedba520847a5120d077e1bf816fbfb))
+
+
 ## 0.5.0 (2015-02-17)
 
 
