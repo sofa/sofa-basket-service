@@ -1,3 +1,11 @@
+## 0.6.0 (2015-03-25)
+
+
+#### Bug Fixes
+
+* **bower.json:** fixes naming ([cc27b7a5](https://github.com/sofa/sofa-basket-service/commit/cc27b7a5a4a0c23f9c99c5e23cd26d43b153b3fe), closes [#2](https://github.com/sofa/sofa-basket-service/issues/2))
+
+
 ### 0.5.1 (2015-03-12)
 
 
