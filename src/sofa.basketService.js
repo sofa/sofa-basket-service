@@ -546,8 +546,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         items.forEach(function (item) {
             var itemQuantity = parseInt(item.quantity, 10);
             var product = item.product;
-            var price = item.getPrice();
-            var tax = parseInt(product.tax, 10);
+            var price = item.getSpecialPrice();
+            var tax = parseInt(product.taxPercent, 10);
             quantity += itemQuantity;
             sum += price * itemQuantity;
             vat += getVat(price, tax, itemQuantity);
