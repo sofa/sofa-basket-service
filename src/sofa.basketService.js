@@ -350,7 +350,7 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         if (!product.hasInfiniteStock() && !variant) {
             product.qty = product.qty + quantity;
         }
-        else if (cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
+        else if (variant !== null && cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
             variant.stock = variant.stock + quantity;
         }
 
