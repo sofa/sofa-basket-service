@@ -1,5 +1,5 @@
 /**
- * sofa-basket-service - v0.4.0 - 2014-12-15
+ * sofa-basket-service - v0.4.0 - 2015-03-26
  * http://www.sofa.io
  *
  * Copyright (c) 2014 CouchCommerce GmbH (http://www.couchcommerce.com / http://www.sofa.io) and other contributors
@@ -360,7 +360,7 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         if (!product.hasInfiniteStock() && !variant) {
             product.qty = product.qty + quantity;
         }
-        else if (cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
+        else if (variant !== null && cc.Util.isObject(variant) && cc.Util.isNumeric(variant.stock)) {
             variant.stock = variant.stock + quantity;
         }
 
@@ -556,8 +556,8 @@ sofa.define('sofa.BasketService', function (storageService, configService, optio
         items.forEach(function (item) {
             var itemQuantity = parseInt(item.quantity, 10);
             var product = item.product;
-            var price = item.getPrice();
-            var tax = parseInt(product.tax, 10);
+            var price = item.getSpecialPrice();
+            var tax = parseInt(product.taxPercent, 10);
             quantity += itemQuantity;
             sum += price * itemQuantity;
             vat += getVat(price, tax, itemQuantity);
